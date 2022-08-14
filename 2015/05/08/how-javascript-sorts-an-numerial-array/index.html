@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>为什么array.sort(function(a, b){return a-b})是从小到大排序 | Jingtao Wang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="Jingtao Wang">
+  
+  
+    <meta name="description" content="根据mozilla的官方说明文档
+
+
+
+If compareFunction(a, b) is less than 0, sort a to a lower index than b, i.e. a comes first.
+
+If compareFunction(a, b) returns 0, leave a and b unchanged with respect to each other">
+  
+  <meta name="description" content="根据mozilla的官方说明文档    If compareFunction(a, b) is less than 0, sort a to a lower index than b, i.e. a comes first.  If compareFunction(a, b) returns 0, leave a and b unchanged with respect to each other">
+<meta name="keywords" content="中文,code,programming,frontend,javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么array.sort(function(a, b){return a-b})是从小到大排序">
+<meta property="og:url" content="https://jtwang.me/2015/05/08/how-javascript-sorts-an-numerial-array/index.html">
+<meta property="og:site_name" content="Jingtao Wang">
+<meta property="og:description" content="根据mozilla的官方说明文档    If compareFunction(a, b) is less than 0, sort a to a lower index than b, i.e. a comes first.  If compareFunction(a, b) returns 0, leave a and b unchanged with respect to each other">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-08-14T07:14:39.561Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为什么array.sort(function(a, b){return a-b})是从小到大排序">
+<meta name="twitter:description" content="根据mozilla的官方说明文档    If compareFunction(a, b) is less than 0, sort a to a lower index than b, i.e. a comes first.  If compareFunction(a, b) returns 0, leave a and b unchanged with respect to each other">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+</html>
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">Jingtao Wang</a></h1>
+    <p><a href="/"></a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/05/08/how-javascript-sorts-an-numerial-array/">
+  <time datetime="2015-05-08T07:00:00.000Z">
+    2015-05-08
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">为什么array.sort(function(a, b){return a-b})是从小到大排序</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>根据mozilla的官方说明文档</p>
+<blockquote>
+</blockquote>
+<ul>
+<li><p>If compareFunction(a, b) is less than 0, sort a to a lower index than b, i.e. a comes first.</p>
+</li>
+<li><p>If compareFunction(a, b) returns 0, leave a and b unchanged with respect to each other, but sorted with respect to all different elements. Note: the ECMAscript standard does not guarantee this behaviour, and thus not all browsers (e.g. Mozilla versions dating back to at least 2003) respect this.</p>
+</li>
+<li><p>If compareFunction(a, b) is greater than 0, sort b to a lower index than a.</p>
+</li>
+<li>compareFunction(a, b) must always return the same value when given a specific pair of elements a and b as its two arguments. If inconsistent results are returned then the sort order is undefined</li>
+</ul>
+<p>简而言之，如果比较函数 function(a, b)结果是小于0的，那么第一个参数a就一定是在第二个参数b的前面。如果结果是大于0的，那么第二个参数b就在第一个参数a的前面。</p>
+<a id="more"></a>
+<p>因此，如果是 function(a, b){return a-b} 那么当a&lt;b时，(a-b) &lt; 0。a就排在b前面，当a&gt;b时, 把b排在a前面，所以总是从小到大排序。</p>
+<p>同理，如果是function(a, b){return b-a} 当a&lt;b时，(b-a) &gt; 0，b在a之前，当a&gt;b时，(b-a) &lt; 0，a在b的前面，总之是从大到小排序。</p>
+<p>至于a=b的情况，正如上述文档所说，并没有官方统一标准，所以不同浏览器可能采取不同的方法。</p>
+<p>ps: 一个小小的疑惑：虽然mozilla的官方文档对array.sort()的解释很清楚了，但是ECMA-262里却并没有提到function(a, b)结果&gt;0时应该如何处理。</p>
+<blockquote>
+</blockquote>
+<ul>
+<li>There must be some mathematical permutation π of the nonnegative integers less than len, such that for every nonnegative integer j less than len, if property old[j] existed, then new[π(j)] is exactly the same value as old[j],. But if property old[j] did not exist, then new[π(j)] does not exist.</li>
+<li>Then for all nonnegative integers j and k, each less than len, if SortCompare(j,k) &lt; 0 (see SortCompare below), then π(j) &lt; π(k).     (<a href="http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf" target="_blank" rel="noopener">from page 141 to page 142 of The Fifth Edition of ECMA-242</a> )</li>
+</ul>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+  <div class="tags">
+    <a class="tags-link" href="/tags/code/">code</a>, <a class="tags-link" href="/tags/frontend/">frontend</a>, <a class="tags-link" href="/tags/javascript/">javascript</a>, <a class="tags-link" href="/tags/programming/">programming</a>, <a class="tags-link" href="/tags/中文/">中文</a>
+  </div>
+
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2022 <a href="/">Jingtao Wang</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var disqus_shortname = 'jwan';
+
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  }());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

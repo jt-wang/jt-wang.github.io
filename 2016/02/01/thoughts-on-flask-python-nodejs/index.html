@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Thoughts on Flask, Python and Node.js | Jingtao Wang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="Jingtao Wang">
+  
+  
+    <meta name="description" content="Recently I’ve been working on a software design competition held in my university. This year’s theme has something to do with GPS/LBS application, which requires candidates to use designated toolkits">
+  
+  <meta name="description" content="Recently I’ve been working on a software design competition held in my university. This year’s theme has something to do with GPS/LBS application, which requires candidates to use designated toolkits">
+<meta name="keywords" content="flask,python,nodejs,web,develop,english">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Thoughts on Flask, Python and Node.js">
+<meta property="og:url" content="https://jtwang.me/2016/02/01/thoughts-on-flask-python-nodejs/index.html">
+<meta property="og:site_name" content="Jingtao Wang">
+<meta property="og:description" content="Recently I’ve been working on a software design competition held in my university. This year’s theme has something to do with GPS/LBS application, which requires candidates to use designated toolkits">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-08-14T07:14:39.562Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Thoughts on Flask, Python and Node.js">
+<meta name="twitter:description" content="Recently I’ve been working on a software design competition held in my university. This year’s theme has something to do with GPS/LBS application, which requires candidates to use designated toolkits">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+</html>
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">Jingtao Wang</a></h1>
+    <p><a href="/"></a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2016/02/01/thoughts-on-flask-python-nodejs/">
+  <time datetime="2016-02-02T05:47:37.000Z">
+    2016-02-01
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Thoughts on Flask, Python and Node.js</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>Recently I’ve been working on a software design competition held in my university. This year’s theme has something to do with GPS/LBS application, which requires candidates to use designated toolkits provided by the sponsor. Since the toolkits is not mature, my team decided to focus on the other option: anything as long as it’s attractive because it’s not mandatory to conform to the theme.</p>
+<p>Anyway, we decided to write an app which enables people to draw their interactive models. Since I have experience in former CMS work, I am in charge of server this time. In CMS, I used Node.js and Express for all of the development so I’d like to try something new, like Python, in this project.</p>
+<p>Above is the prelude of my thoughts. Initially I set up a virtual environment using pyenv and pyenv-virutualenv. Compared to Node.js ’s NPM, Python’s PIP is not that user-friendly. </p>
+<a id="more"></a>
+<p>PIP is not an official requirement for Python development. Popular as it is, PIP is still faced up with some alternatives including easy-install. However, NPM is a must-have tool for Node.jsers and it provides with convenient module management, no matter local and global.</p>
+<p>After the environment configuration, I chose flask as the web structure according to its popularity and well-known pythonic style of apis. As is mentioned before, I used Express when I worked on CMS using Node.js. Express is comprehensive but not complicated. It’s as powerful as Django for Python but does not introduce many new concepts so JSers, as long as they’ve been familiar with async IO, would fall in love with it for they can start building web applications in several hours without too much effort learning Express.</p>
+<p>When it comes to Flask, things are really different. If one is accustomed to Javascript, he may feel free to write a {} to represent an object. Object is everything. Anything can be object. These two sentences seem right in JavaScript’s world but we had better be good boys in Python. Python is simple and rigid, to some extent.  Dict is a primary data structure in Python but in Javascript, {key: value} is merely an object.  Take json as an example, there is always conversion before you use it in Python but json has nothing different with another common object except json’s quotation marks. </p>
+<p>What follows is callback. In JavaScript, Every IO is async. There is no exception. Thus programmers write numerous callbacks or invent something new to mimic the synchronizing way. Therefore it’s very natural in Express to register route controllers using callbacks. In Flask, the decorator is introduced and adopted as the solution.<br>A decorator is something like </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func = decorator(func)</span><br></pre></td></tr></table></figure>
+<p>Closure is used here to wrap the original func with something added and return the wrapper to replace with the original variable : func. It’s great fun in that it enables programmers to re-use and decouple functions.</p>
+<p>What has confused me for one or two days is the module import mechanism of Python. In Express (Node.js) or Django (Python), relationships of different modules have been controlled by the structure itself and everything is fine. Flask is light, which means users need to configure something themselves . If you use blueprint, things will be better but if not, the knowledge of module import is a life buoy when you encounter errors. In Flask, import loop should be avoided and this prompts programmers to think more on the structure of his codes.</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+  <div class="tags">
+    <a class="tags-link" href="/tags/develop/">develop</a>, <a class="tags-link" href="/tags/english/">english</a>, <a class="tags-link" href="/tags/flask/">flask</a>, <a class="tags-link" href="/tags/nodejs/">nodejs</a>, <a class="tags-link" href="/tags/python/">python</a>, <a class="tags-link" href="/tags/web/">web</a>
+  </div>
+
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2022 <a href="/">Jingtao Wang</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var disqus_shortname = 'jwan';
+
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  }());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>
